@@ -3,10 +3,365 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Learning Git</title>
+  <title>Git Atlas — Core Concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Learning Git</h1>
-  <p>I'm learning Git and this is a starter page for practicing Git in the AI and Design Systems course.</p>
+  <a class="skip-link" href="#concepts">Skip to concepts</a>
+
+  <header class="hero">
+    <div class="hero__atmosphere" aria-hidden="true"></div>
+    <nav class="hero__nav" aria-label="Primary">
+      <span class="brand">Git Atlas</span>
+      <a class="hero__cta" href="#concepts">Explore concepts</a>
+    </nav>
+    <div class="hero__content">
+      <p class="brand brand--hero">Git Atlas</p>
+      <h1>Eleven ideas that unlock how Git and GitHub actually work.</h1>
+      <p class="hero__lede">Short definitions, practical considerations, and animated visuals for each concept from the cheat sheet.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#concepts">Start with Repository</a>
+        <a class="btn btn--ghost" href="#pull-request">Jump to PRs</a>
+      </div>
+    </div>
+    <div class="hero__visual" aria-hidden="true">
+      <svg id="hero-svg" viewBox="0 0 640 360" role="img">
+        <defs>
+          <linearGradient id="heroLine" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1f6f6a"/>
+            <stop offset="100%" stop-color="#3aa6a0"/>
+          </linearGradient>
+        </defs>
+        <path class="hero-path hero-path--main" d="M80 220 H560" stroke="url(#heroLine)" stroke-width="4" fill="none"/>
+        <path class="hero-path hero-path--branch" d="M260 220 C320 220 340 120 420 120 H540" stroke="#e07a3d" stroke-width="4" fill="none"/>
+        <circle class="hero-node" cx="140" cy="220" r="10" fill="#163a38"/>
+        <circle class="hero-node" cx="260" cy="220" r="10" fill="#163a38"/>
+        <circle class="hero-node" cx="380" cy="220" r="10" fill="#163a38"/>
+        <circle class="hero-node" cx="500" cy="220" r="10" fill="#163a38"/>
+        <circle class="hero-node hero-node--branch" cx="420" cy="120" r="10" fill="#e07a3d"/>
+        <circle class="hero-node hero-node--branch" cx="540" cy="120" r="10" fill="#e07a3d"/>
+        <text x="80" y="280" class="hero-label">main</text>
+        <text x="420" y="80" class="hero-label hero-label--accent">feature</text>
+      </svg>
+    </div>
+  </header>
+
+  <main id="concepts">
+    <section class="concept" id="repository" data-anim="repository">
+      <div class="concept__copy">
+        <p class="concept__index">01</p>
+        <h2>Repository <span>(repo)</span></h2>
+        <p class="concept__desc">The project folder tracked by Git — your local working tree plus the hidden history Git stores — and usually mirrored on a host like GitHub.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Initialize once per project; don’t nest repos unless you intend to use submodules.</li>
+          <li>Keep secrets out of the repo; use <code>.gitignore</code> and environment variables.</li>
+          <li>Agree early on a default branch name and hosting remote.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <rect class="repo-folder" x="90" y="70" width="240" height="160" rx="16" fill="#dff2ef" stroke="#163a38" stroke-width="3"/>
+          <path class="repo-tab" d="M110 70 V52 H190 V70" fill="#dff2ef" stroke="#163a38" stroke-width="3"/>
+          <rect class="repo-dotgit" x="150" y="120" width="120" height="56" rx="10" fill="#163a38"/>
+          <text class="repo-dotgit-label" x="210" y="154" text-anchor="middle" fill="#f4faf8" font-family="IBM Plex Mono, monospace" font-size="18">.git</text>
+          <text class="repo-caption" x="210" y="250" text-anchor="middle" fill="#3d5450" font-family="IBM Plex Mono, monospace" font-size="14">tracked project</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="concept" id="clone" data-anim="clone">
+      <div class="concept__copy">
+        <p class="concept__index">02</p>
+        <h2>Clone</h2>
+        <p class="concept__desc">Download a full copy of a hosted repository to your machine, including history and remote tracking branches, so you can work offline and sync later.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Cloning large histories can take time; shallow clones help when you only need recent work.</li>
+          <li>You’ll get a remote named <code>origin</code> by default — know where it points.</li>
+          <li>Clone the repo you intend to contribute to, not a fork, unless you plan to open a PR from a fork.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <rect class="clone-remote" x="40" y="90" width="120" height="90" rx="14" fill="#163a38"/>
+          <text x="100" y="142" text-anchor="middle" fill="#f4faf8" font-family="IBM Plex Mono, monospace" font-size="14">remote</text>
+          <path class="clone-arrow" d="M175 135 H255" stroke="#e07a3d" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <polygon class="clone-arrowhead" points="255,125 275,135 255,145" fill="#e07a3d"/>
+          <rect class="clone-local" x="290" y="90" width="100" height="90" rx="14" fill="#dff2ef" stroke="#163a38" stroke-width="3"/>
+          <text class="clone-local-label" x="340" y="142" text-anchor="middle" fill="#163a38" font-family="IBM Plex Mono, monospace" font-size="14">local</text>
+          <g class="clone-packet">
+            <rect x="200" y="118" width="28" height="34" rx="4" fill="#3aa6a0"/>
+            <line x1="206" y1="128" x2="222" y2="128" stroke="#dff2ef" stroke-width="2"/>
+            <line x1="206" y1="136" x2="218" y2="136" stroke="#dff2ef" stroke-width="2"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="concept" id="branch" data-anim="branch">
+      <div class="concept__copy">
+        <p class="concept__index">03</p>
+        <h2>Branch</h2>
+        <p class="concept__desc">A safe parallel timeline of commits. You can experiment or ship a feature without disturbing the main line of history until you’re ready to combine them.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Name branches for intent: <code>feature/…</code>, <code>fix/…</code>, <code>chore/…</code>.</li>
+          <li>Keep branches short-lived so merges stay small and reviewable.</li>
+          <li>Update from <code>main</code> regularly to avoid painful catch-up later.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <path class="branch-main" d="M50 180 H370" stroke="#163a38" stroke-width="4" fill="none"/>
+          <path class="branch-side" d="M170 180 C210 180 230 90 280 90 H370" stroke="#e07a3d" stroke-width="4" fill="none"/>
+          <circle class="branch-node" cx="90" cy="180" r="9" fill="#163a38"/>
+          <circle class="branch-node" cx="170" cy="180" r="9" fill="#163a38"/>
+          <circle class="branch-node" cx="280" cy="180" r="9" fill="#163a38"/>
+          <circle class="branch-node branch-node--side" cx="280" cy="90" r="9" fill="#e07a3d"/>
+          <circle class="branch-node branch-node--side" cx="350" cy="90" r="9" fill="#e07a3d"/>
+          <text x="50" y="220" fill="#3d5450" font-family="IBM Plex Mono, monospace" font-size="13">main</text>
+          <text class="branch-label" x="280" y="60" fill="#e07a3d" font-family="IBM Plex Mono, monospace" font-size="13">feature</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="concept" id="commit" data-anim="commit">
+      <div class="concept__copy">
+        <p class="concept__index">04</p>
+        <h2>Commit</h2>
+        <p class="concept__desc">A snapshot of staged changes plus a message that explains why those changes exist. Commits form the history you can review, revert, or rebuild from.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Write messages for future readers: what changed and why, not only what files.</li>
+          <li>Prefer small, focused commits over one giant “misc fixes” blob.</li>
+          <li>Don’t rewrite shared history on protected branches without team agreement.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <path class="commit-line" d="M60 150 H360" stroke="#9bb8b3" stroke-width="4" fill="none"/>
+          <g class="commit-item" data-n="1">
+            <circle cx="100" cy="150" r="12" fill="#163a38"/>
+            <rect x="70" y="188" width="60" height="28" rx="8" fill="#dff2ef" stroke="#163a38" stroke-width="2"/>
+            <text x="100" y="207" text-anchor="middle" fill="#163a38" font-family="IBM Plex Mono, monospace" font-size="11">init</text>
+          </g>
+          <g class="commit-item" data-n="2">
+            <circle cx="210" cy="150" r="12" fill="#163a38"/>
+            <rect x="180" y="188" width="60" height="28" rx="8" fill="#dff2ef" stroke="#163a38" stroke-width="2"/>
+            <text x="210" y="207" text-anchor="middle" fill="#163a38" font-family="IBM Plex Mono, monospace" font-size="11">add UI</text>
+          </g>
+          <g class="commit-item" data-n="3">
+            <circle cx="320" cy="150" r="12" fill="#3aa6a0"/>
+            <rect x="285" y="188" width="70" height="28" rx="8" fill="#dff2ef" stroke="#3aa6a0" stroke-width="2"/>
+            <text x="320" y="207" text-anchor="middle" fill="#163a38" font-family="IBM Plex Mono, monospace" font-size="11">fix bug</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="concept" id="push-pull" data-anim="push-pull">
+      <div class="concept__copy">
+        <p class="concept__index">05</p>
+        <h2>Push / Pull</h2>
+        <p class="concept__desc">Push uploads your local commits to the hosted repository. Pull downloads remote updates and integrates them into your current branch.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Pull (or fetch + merge/rebase) before pushing when others share the branch.</li>
+          <li>Never force-push to shared default branches unless your team’s process allows it.</li>
+          <li>Know whether your pull merges or rebases — the result looks different in history.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <rect x="40" y="100" width="110" height="80" rx="14" fill="#dff2ef" stroke="#163a38" stroke-width="3"/>
+          <text x="95" y="146" text-anchor="middle" fill="#163a38" font-family="IBM Plex Mono, monospace" font-size="14">local</text>
+          <rect x="270" y="100" width="110" height="80" rx="14" fill="#163a38"/>
+          <text x="325" y="146" text-anchor="middle" fill="#f4faf8" font-family="IBM Plex Mono, monospace" font-size="14">remote</text>
+          <path class="pp-push" d="M160 118 H260" stroke="#e07a3d" stroke-width="4" fill="none" marker-end="url(#arrowPush)"/>
+          <path class="pp-pull" d="M260 162 H160" stroke="#3aa6a0" stroke-width="4" fill="none"/>
+          <polygon class="pp-push-head" points="260,108 280,118 260,128" fill="#e07a3d"/>
+          <polygon class="pp-pull-head" points="160,152 140,162 160,172" fill="#3aa6a0"/>
+          <text x="210" y="108" text-anchor="middle" fill="#e07a3d" font-family="IBM Plex Mono, monospace" font-size="12">push</text>
+          <text x="210" y="192" text-anchor="middle" fill="#3aa6a0" font-family="IBM Plex Mono, monospace" font-size="12">pull</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="concept" id="diff" data-anim="diff">
+      <div class="concept__copy">
+        <p class="concept__index">06</p>
+        <h2>Diff</h2>
+        <p class="concept__desc">The visual difference between two versions of code — often between branches, commits, or your working tree and the last snapshot — line by line.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Read diffs before committing so you don’t ship debug leftovers.</li>
+          <li>Whitespace and formatting changes can drown out real logic changes.</li>
+          <li>Review tools highlight adds and deletes; understand both sides of a change.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <rect x="50" y="50" width="140" height="180" rx="12" fill="#f7fbfa" stroke="#163a38" stroke-width="2"/>
+          <rect x="230" y="50" width="140" height="180" rx="12" fill="#f7fbfa" stroke="#163a38" stroke-width="2"/>
+          <text x="120" y="78" text-anchor="middle" fill="#3d5450" font-family="IBM Plex Mono, monospace" font-size="12">before</text>
+          <text x="300" y="78" text-anchor="middle" fill="#3d5450" font-family="IBM Plex Mono, monospace" font-size="12">after</text>
+          <rect class="diff-line" x="68" y="100" width="104" height="14" rx="3" fill="#c5d8d4"/>
+          <rect class="diff-line" x="68" y="126" width="88" height="14" rx="3" fill="#c5d8d4"/>
+          <rect class="diff-remove" x="68" y="152" width="96" height="14" rx="3" fill="#f0b4a0"/>
+          <rect class="diff-line" x="248" y="100" width="104" height="14" rx="3" fill="#c5d8d4"/>
+          <rect class="diff-line" x="248" y="126" width="88" height="14" rx="3" fill="#c5d8d4"/>
+          <rect class="diff-add" x="248" y="152" width="104" height="14" rx="3" fill="#9fd6c4"/>
+          <rect class="diff-add" x="248" y="178" width="72" height="14" rx="3" fill="#9fd6c4"/>
+        </svg>
+      </div>
+    </section>
+
+    <section class="concept" id="merge" data-anim="merge">
+      <div class="concept__copy">
+        <p class="concept__index">07</p>
+        <h2>Merge</h2>
+        <p class="concept__desc">Combine one branch into another, preserving both histories and usually creating a merge commit when the branches have diverged.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Merging into <code>main</code> should follow your review process (often via PR).</li>
+          <li>Merge commits make the join point explicit — useful for release archaeology.</li>
+          <li>Resolve conflicts carefully; a clean merge still needs a quick smoke test.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <path class="merge-main" d="M50 170 H200 C240 170 250 170 280 140 H360" stroke="#163a38" stroke-width="4" fill="none"/>
+          <path class="merge-side" d="M50 80 H200 C240 80 250 80 280 140" stroke="#e07a3d" stroke-width="4" fill="none"/>
+          <circle class="merge-node" cx="90" cy="170" r="9" fill="#163a38"/>
+          <circle class="merge-node" cx="170" cy="170" r="9" fill="#163a38"/>
+          <circle class="merge-node merge-node--side" cx="90" cy="80" r="9" fill="#e07a3d"/>
+          <circle class="merge-node merge-node--side" cx="170" cy="80" r="9" fill="#e07a3d"/>
+          <circle class="merge-join" cx="280" cy="140" r="12" fill="#3aa6a0"/>
+          <circle class="merge-node" cx="350" cy="140" r="9" fill="#163a38"/>
+          <text x="50" y="210" fill="#3d5450" font-family="IBM Plex Mono, monospace" font-size="13">main</text>
+          <text x="50" y="55" fill="#e07a3d" font-family="IBM Plex Mono, monospace" font-size="13">feature</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="concept" id="rebase" data-anim="rebase">
+      <div class="concept__copy">
+        <p class="concept__index">08</p>
+        <h2>Rebase</h2>
+        <p class="concept__desc">Replay your commits on top of the latest <code>main</code> so your branch history looks linear, as if you started from the newest base.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Great for cleaning a private feature branch before review.</li>
+          <li>Avoid rebasing commits already pushed and shared — it rewrites history.</li>
+          <li>Conflicts still happen; you resolve them commit-by-commit during the replay.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <path d="M40 190 H380" stroke="#9bb8b3" stroke-width="3" fill="none"/>
+          <circle class="rebase-main" cx="80" cy="190" r="9" fill="#163a38"/>
+          <circle class="rebase-main" cx="160" cy="190" r="9" fill="#163a38"/>
+          <circle class="rebase-main rebase-main--new" cx="240" cy="190" r="9" fill="#163a38"/>
+          <g class="rebase-commits">
+            <circle class="rebase-feat" cx="200" cy="100" r="9" fill="#e07a3d"/>
+            <circle class="rebase-feat" cx="270" cy="100" r="9" fill="#e07a3d"/>
+          </g>
+          <path class="rebase-link" d="M160 190 C180 190 185 100 200 100" stroke="#e07a3d" stroke-width="3" fill="none"/>
+          <text x="40" y="230" fill="#3d5450" font-family="IBM Plex Mono, monospace" font-size="13">main</text>
+          <text class="rebase-caption" x="240" y="70" text-anchor="middle" fill="#e07a3d" font-family="IBM Plex Mono, monospace" font-size="12">replay onto latest</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="concept" id="merge-conflict" data-anim="conflict">
+      <div class="concept__copy">
+        <p class="concept__index">09</p>
+        <h2>Merge conflict</h2>
+        <p class="concept__desc">Two changes touched the same lines (or nearby structure) and Git can’t choose automatically — you decide the final combined result.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Communicate with whoever wrote the other change when intent isn’t obvious.</li>
+          <li>After resolving, run tests; conflicts can hide subtle logic mistakes.</li>
+          <li>Smaller, frequent integrations reduce how often conflicts appear.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <rect class="conflict-a" x="50" y="70" width="130" height="70" rx="12" fill="#f0b4a0" stroke="#c45c2c" stroke-width="2"/>
+          <text x="115" y="110" text-anchor="middle" fill="#163a38" font-family="IBM Plex Mono, monospace" font-size="13">yours</text>
+          <rect class="conflict-b" x="240" y="70" width="130" height="70" rx="12" fill="#9fd6c4" stroke="#1f6f6a" stroke-width="2"/>
+          <text x="305" y="110" text-anchor="middle" fill="#163a38" font-family="IBM Plex Mono, monospace" font-size="13">theirs</text>
+          <path class="conflict-burst" d="M190 105 H230" stroke="#e07a3d" stroke-width="4" stroke-dasharray="6 6"/>
+          <rect class="conflict-result" x="120" y="180" width="180" height="60" rx="12" fill="#dff2ef" stroke="#163a38" stroke-width="3"/>
+          <text class="conflict-result-label" x="210" y="215" text-anchor="middle" fill="#163a38" font-family="IBM Plex Mono, monospace" font-size="14">you choose</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="concept" id="pull-request" data-anim="pr">
+      <div class="concept__copy">
+        <p class="concept__index">10</p>
+        <h2>Pull Request <span>(PR)</span></h2>
+        <p class="concept__desc">A request to review and merge your branch into another — the social layer over Git that hosts discussion, checks, and approval.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Describe the why, link issues, and call out risky areas for reviewers.</li>
+          <li>Keep PRs reviewably sized; giant diffs slow feedback and hide bugs.</li>
+          <li>CI, lint, and required reviews exist to protect <code>main</code> — treat failures as signals.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <rect class="pr-card" x="90" y="60" width="240" height="160" rx="16" fill="#f7fbfa" stroke="#163a38" stroke-width="3"/>
+          <text x="210" y="100" text-anchor="middle" fill="#163a38" font-family="Syne, sans-serif" font-size="20" font-weight="700">Pull Request</text>
+          <text class="pr-from" x="210" y="132" text-anchor="middle" fill="#e07a3d" font-family="IBM Plex Mono, monospace" font-size="13">feature/login → main</text>
+          <rect class="pr-btn" x="145" y="155" width="130" height="36" rx="10" fill="#3aa6a0"/>
+          <text class="pr-btn-label" x="210" y="178" text-anchor="middle" fill="#f4faf8" font-family="IBM Plex Mono, monospace" font-size="13">review &amp; merge</text>
+        </svg>
+      </div>
+    </section>
+
+    <section class="concept" id="issue" data-anim="issue">
+      <div class="concept__copy">
+        <p class="concept__index">11</p>
+        <h2>Issue</h2>
+        <p class="concept__desc">A ticket for a bug, feature, or task. Issues capture context and discussion; they don’t change code until someone opens a branch and PR to address them.</p>
+        <h3>Considerations</h3>
+        <ul>
+          <li>Write a clear title, steps to reproduce (for bugs), and acceptance criteria.</li>
+          <li>Label and assign so the backlog stays navigable.</li>
+          <li>Link issues to PRs so history shows what work closed what ticket.</li>
+        </ul>
+      </div>
+      <div class="concept__stage" aria-hidden="true">
+        <svg viewBox="0 0 420 280" class="viz">
+          <rect class="issue-board" x="70" y="50" width="280" height="190" rx="16" fill="#dff2ef" stroke="#163a38" stroke-width="3"/>
+          <text x="210" y="82" text-anchor="middle" fill="#3d5450" font-family="IBM Plex Mono, monospace" font-size="12">backlog</text>
+          <g class="issue-ticket">
+            <rect x="100" y="100" width="220" height="54" rx="10" fill="#f7fbfa" stroke="#163a38" stroke-width="2"/>
+            <circle cx="124" cy="127" r="8" fill="#e07a3d"/>
+            <text x="145" y="132" fill="#163a38" font-family="IBM Plex Mono, monospace" font-size="13">#42 Fix nav focus</text>
+          </g>
+          <g class="issue-ticket issue-ticket--two">
+            <rect x="100" y="168" width="220" height="48" rx="10" fill="#f7fbfa" stroke="#9bb8b3" stroke-width="2"/>
+            <circle cx="124" cy="192" r="8" fill="#3aa6a0"/>
+            <text x="145" y="197" fill="#163a38" font-family="IBM Plex Mono, monospace" font-size="13">#43 Add dark theme</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><span class="brand">Git Atlas</span> — a visual cheat sheet for learning Git and GitHub.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
