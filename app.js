@@ -263,7 +263,7 @@ function animDiff(tl, q) {
 
   [0, 1, 2, 3].forEach((i) => {
     if (i > 0) tl.to(scan, { y: 46 * i, duration: 0.35, ease: "power2.inOut" }, "+=0.3");
-    if (i === 0) tl.say("Red lines were removed, green lines were added", "+=0.2");
+    if (i === 0) tl.say("Minus marks removals; plus marks additions", "+=0.2");
     if (i < 2) {
       tl.to([dels[i], adds[i]], { scaleX: 1, duration: 0.45 }, "+=0.1")
         .to([delSigns[i], addSigns[i]], { opacity: 1, duration: 0.2 }, "<0.2");
@@ -437,6 +437,15 @@ const animators = {
 function setupStage(section, build) {
   const stage = section.querySelector(".concept__stage");
   const q = gsap.utils.selector(section);
+  const replay = section.querySelector(".stage__replay");
+  const heading = section.querySelector("h2");
+  const headingText = heading
+    ? heading.textContent.replace(/\s+/g, " ").trim()
+    : "concept";
+
+  if (replay) {
+    replay.setAttribute("aria-label", `Replay ${headingText} animation`);
+  }
 
   gsap.set(stage.querySelectorAll(".viz g, .viz circle, .viz rect, .viz polygon, .viz path, .viz text"), {
     transformOrigin: "50% 50%",
@@ -446,7 +455,7 @@ function setupStage(section, build) {
   build(tl, q);
 
   if (reduceMotion) {
-    tl.progress(1);
+    tl.progress(1).pause();
   } else {
     // Loop while the stage is on screen; pause when it scrolls away.
     ScrollTrigger.create({
@@ -457,21 +466,33 @@ function setupStage(section, build) {
     });
   }
 
-  section.querySelector(".stage__replay").addEventListener("click", () => tl.restart());
+  if (replay) {
+    replay.addEventListener("click", () => {
+      if (reduceMotion) {
+        tl.pause(0);
+        tl.progress(1);
+      } else {
+        tl.restart();
+      }
+    });
+  }
 }
 
 function init() {
   heroIntro();
 
   document.querySelectorAll(".concept[data-anim]").forEach((section) => {
-    gsap.from(section.querySelectorAll(".concept__head > *, .concept__notes"), {
-      scrollTrigger: { trigger: section, start: "top 80%" },
-      y: 22,
-      opacity: 0,
-      stagger: 0.1,
-      duration: reduceMotion ? 0.01 : 0.6,
-      ease: "power2.out",
-    });
+    // Avoid opacity:0 entrance for reduced motion — keeps content reliably visible.
+    if (!reduceMotion) {
+      gsap.from(section.querySelectorAll(".concept__head > *, .concept__notes"), {
+        scrollTrigger: { trigger: section, start: "top 80%" },
+        y: 22,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+    }
 
     const build = animators[section.dataset.anim];
     if (build) setupStage(section, build);

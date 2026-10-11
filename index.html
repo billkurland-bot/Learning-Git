@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Git Atlas — Core Concepts</title>
+  <meta name="description" content="Visual guide to eleven core Git and GitHub concepts with definitions, considerations, and animated explanations.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
@@ -23,12 +24,12 @@
       <h1>Eleven ideas that unlock how Git and GitHub actually work.</h1>
       <p class="hero__lede">Short definitions, practical considerations, and animated visuals for each concept from the cheat sheet.</p>
       <div class="hero__actions">
-        <a class="btn btn--primary" href="#concepts">Start with Repository</a>
+        <a class="btn btn--primary" href="#repository">Start with Repository</a>
         <a class="btn btn--ghost" href="#pull-request">Jump to PRs</a>
       </div>
     </div>
     <div class="hero__visual" aria-hidden="true">
-      <svg id="hero-svg" viewBox="0 0 640 360" role="img">
+      <svg id="hero-svg" viewBox="0 0 640 360" focusable="false">
         <defs>
           <linearGradient id="heroLine" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stop-color="#1f6f6a"/>
@@ -49,8 +50,24 @@
     </div>
   </header>
 
+  <nav class="toc" aria-label="Concepts">
+    <h2 class="toc__title" id="toc-title">Jump to a concept</h2>
+    <ol class="toc__list" role="list">
+      <li><a href="#repository">Repository</a></li>
+      <li><a href="#clone">Clone</a></li>
+      <li><a href="#branch">Branch</a></li>
+      <li><a href="#commit">Commit</a></li>
+      <li><a href="#push-pull">Push / Pull</a></li>
+      <li><a href="#diff">Diff</a></li>
+      <li><a href="#merge">Merge</a></li>
+      <li><a href="#rebase">Rebase</a></li>
+      <li><a href="#merge-conflict">Merge conflict</a></li>
+      <li><a href="#pull-request">Pull Request</a></li>
+      <li><a href="#issue">Issue</a></li>
+    </ol>
+  </nav>
 
-  <main id="concepts">
+  <main id="concepts" tabindex="-1">
     <section class="concept" id="repository" data-anim="repository" aria-labelledby="repository-title">
       <div class="concept__head">
         <div>
@@ -59,8 +76,9 @@
         </div>
         <p class="concept__desc">The project folder tracked by Git — your local working tree plus the hidden history Git stores — and usually mirrored on a host like GitHub.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="repository-stage-desc">
+        <p class="visually-hidden" id="repository-stage-desc">Animation: a project folder with working files gains a hidden .git history store, then mirrors to GitHub as origin.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <g class="repo-folder">
             <path d="M150 128 V104 Q150 92 162 92 H300 Q312 92 318 102 L332 128" fill="#dff2ef" stroke="#163a38" stroke-width="3"/>
             <rect x="150" y="128" width="560" height="320" rx="24" fill="#f7fbfa" stroke="#163a38" stroke-width="3"/>
@@ -122,7 +140,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Initialize once per project; don’t nest repos unless you intend to use submodules.</li>
           <li>Keep secrets out of the repo; use <code>.gitignore</code> and environment variables.</li>
           <li>Agree early on a default branch name and hosting remote.</li>
@@ -138,8 +156,9 @@
         </div>
         <p class="concept__desc">Download a full copy of a hosted repository to your machine, including history and remote tracking branches, so you can work offline and sync later.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="clone-stage-desc">
+        <p class="visually-hidden" id="clone-stage-desc">Animation: git clone copies a remote GitHub repository onto your laptop, including history and an origin remote.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <g class="clone-remote">
             <rect x="80" y="120" width="360" height="280" rx="24" fill="#163a38"/>
             <text x="112" y="170" class="t-lg fill-light">GitHub</text>
@@ -177,7 +196,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Cloning large histories can take time; shallow clones help when you only need recent work.</li>
           <li>You’ll get a remote named <code>origin</code> by default — know where it points.</li>
           <li>Clone the repo you intend to contribute to, not a fork, unless you plan to open a PR from a fork.</li>
@@ -193,8 +212,9 @@
         </div>
         <p class="concept__desc">A safe parallel timeline of commits. You can experiment or ship a feature without disturbing the main line of history until you’re ready to combine them.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="branch-stage-desc">
+        <p class="visually-hidden" id="branch-stage-desc">Animation: a feature branch forks from main so new commits leave the shared history untouched.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <path class="br-main" d="M80 340 H1000" stroke="#163a38" stroke-width="5" fill="none"/>
           <path class="br-side" d="M440 340 C540 340 560 180 660 180 H1000" stroke="#e07a3d" stroke-width="5" fill="none"/>
           <text class="br-label-main t-md" x="1020" y="348">main</text>
@@ -220,7 +240,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Name branches for intent: <code>feature/…</code>, <code>fix/…</code>, <code>chore/…</code>.</li>
           <li>Keep branches short-lived so merges stay small and reviewable.</li>
           <li>Update from <code>main</code> regularly to avoid painful catch-up later.</li>
@@ -236,8 +256,9 @@
         </div>
         <p class="concept__desc">A snapshot of staged changes plus a message that explains why those changes exist. Commits form the history you can review, revert, or rebuild from.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="commit-stage-desc">
+        <p class="visually-hidden" id="commit-stage-desc">Animation: edited files are staged with git add, then saved as a commit snapshot with a message.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <text x="210" y="110" text-anchor="middle" class="t-sm fill-soft">working directory</text>
           <text x="600" y="110" text-anchor="middle" class="t-sm fill-soft">staging area</text>
           <text x="990" y="110" text-anchor="middle" class="t-sm fill-soft">history</text>
@@ -284,7 +305,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Write messages for future readers: what changed and why, not only what files.</li>
           <li>Prefer small, focused commits over one giant “misc fixes” blob.</li>
           <li>Don’t rewrite shared history on protected branches without team agreement.</li>
@@ -300,8 +321,9 @@
         </div>
         <p class="concept__desc">Push uploads your local commits to the hosted repository. Pull downloads remote updates and integrates them into your current branch.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="push-pull-stage-desc">
+        <p class="visually-hidden" id="push-pull-stage-desc">Animation: git push uploads local commits to origin; git pull brings a teammate’s remote commit down.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <rect x="80" y="130" width="380" height="270" rx="24" fill="#f7fbfa" stroke="#163a38" stroke-width="3"/>
           <text x="110" y="180" class="t-lg">your laptop</text>
           <text x="110" y="210" class="t-sm fill-soft">local main</text>
@@ -341,7 +363,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Pull (or fetch + merge/rebase) before pushing when others share the branch.</li>
           <li>Never force-push to shared default branches unless your team’s process allows it.</li>
           <li>Know whether your pull merges or rebases — the result looks different in history.</li>
@@ -357,8 +379,9 @@
         </div>
         <p class="concept__desc">The visual difference between two versions of code — often between branches, commits, or your working tree and the last snapshot — line by line.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="diff-stage-desc">
+        <p class="visually-hidden" id="diff-stage-desc">Animation: two file versions are compared line by line; removed lines are marked with minus and added lines with plus.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <g class="df-pane">
             <rect x="70" y="100" width="510" height="300" rx="18" fill="#f7fbfa" stroke="#163a38" stroke-width="2"/>
             <path d="M70 152 H580" stroke="#c5d8d4" stroke-width="2"/>
@@ -402,7 +425,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Read diffs before committing so you don’t ship debug leftovers.</li>
           <li>Whitespace and formatting changes can drown out real logic changes.</li>
           <li>Review tools highlight adds and deletes; understand both sides of a change.</li>
@@ -418,8 +441,9 @@
         </div>
         <p class="concept__desc">Combine one branch into another, preserving both histories and usually creating a merge commit when the branches have diverged.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="merge-stage-desc">
+        <p class="visually-hidden" id="merge-stage-desc">Animation: diverged feature and main branches join through a merge commit that preserves both histories.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <path class="mg-main-a" d="M80 340 H820" stroke="#163a38" stroke-width="5" fill="none"/>
           <path class="mg-main-b" d="M820 340 H1100" stroke="#163a38" stroke-width="5" fill="none"/>
           <path class="mg-feat-out" d="M300 340 C380 340 400 180 480 180 H640" stroke="#e07a3d" stroke-width="5" fill="none"/>
@@ -445,7 +469,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Merging into <code>main</code> should follow your review process (often via PR).</li>
           <li>Merge commits make the join point explicit — useful for release archaeology.</li>
           <li>Resolve conflicts carefully; a clean merge still needs a quick smoke test.</li>
@@ -461,8 +485,9 @@
         </div>
         <p class="concept__desc">Replay your commits on top of the latest <code>main</code> so your branch history looks linear, as if you started from the newest base.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="rebase-stage-desc">
+        <p class="visually-hidden" id="rebase-stage-desc">Animation: feature commits are replayed onto the latest main commit to form a linear history.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <path d="M80 380 H1100" stroke="#163a38" stroke-width="5" fill="none"/>
           <text class="t-md" x="1120" y="388">main</text>
           <g class="rb-old">
@@ -503,7 +528,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Great for cleaning a private feature branch before review.</li>
           <li>Avoid rebasing commits already pushed and shared — it rewrites history.</li>
           <li>Conflicts still happen; you resolve them commit-by-commit during the replay.</li>
@@ -519,8 +544,9 @@
         </div>
         <p class="concept__desc">Two changes touched the same lines (or nearby structure) and Git can’t choose automatically — you decide the final combined result.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="merge-conflict-stage-desc">
+        <p class="visually-hidden" id="merge-conflict-stage-desc">Animation: conflicting edits collide; conflict markers appear; you choose the final line and mark it resolved.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <g class="cf-yours">
             <rect x="80" y="70" width="420" height="140" rx="18" fill="#fbe3da" stroke="#e07a3d" stroke-width="2"/>
             <text x="110" y="112" class="t-sm fill-ember">yours · feature</text>
@@ -557,7 +583,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Communicate with whoever wrote the other change when intent isn’t obvious.</li>
           <li>After resolving, run tests; conflicts can hide subtle logic mistakes.</li>
           <li>Smaller, frequent integrations reduce how often conflicts appear.</li>
@@ -573,8 +599,9 @@
         </div>
         <p class="concept__desc">A request to review and merge your branch into another — the social layer over Git that hosts discussion, checks, and approval.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="pull-request-stage-desc">
+        <p class="visually-hidden" id="pull-request-stage-desc">Animation: a pull request gathers checks and approval, then merges a feature branch into main.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <path class="pr-main" d="M80 380 H500" stroke="#163a38" stroke-width="5" fill="none"/>
           <path class="pr-feat-out" d="M150 380 C210 380 220 260 280 260 H400" stroke="#e07a3d" stroke-width="5" fill="none"/>
           <path class="pr-feat-in" d="M400 260 C450 260 460 380 500 380" stroke="#e07a3d" stroke-width="5" fill="none"/>
@@ -611,7 +638,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Describe the why, link issues, and call out risky areas for reviewers.</li>
           <li>Keep PRs reviewably sized; giant diffs slow feedback and hide bugs.</li>
           <li>CI, lint, and required reviews exist to protect <code>main</code> — treat failures as signals.</li>
@@ -627,8 +654,9 @@
         </div>
         <p class="concept__desc">A ticket for a bug, feature, or task. Issues capture context and discussion; they don’t change code until someone opens a branch and PR to address them.</p>
       </div>
-      <div class="concept__stage">
-        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true">
+      <div class="concept__stage" aria-describedby="issue-stage-desc">
+        <p class="visually-hidden" id="issue-stage-desc">Animation: an issue moves from open to in progress with a branch and pull request, then to done when merged.</p>
+        <svg class="viz" viewBox="0 0 1200 520" aria-hidden="true" focusable="false">
           <rect x="70" y="80" width="320" height="400" rx="20" fill="#eef5f3" stroke="#c5d8d4" stroke-width="2"/>
           <rect x="440" y="80" width="320" height="400" rx="20" fill="#eef5f3" stroke="#c5d8d4" stroke-width="2"/>
           <rect x="810" y="80" width="320" height="400" rx="20" fill="#eef5f3" stroke="#c5d8d4" stroke-width="2"/>
@@ -666,7 +694,7 @@
       </div>
       <div class="concept__notes">
         <h3>Considerations</h3>
-        <ul>
+        <ul role="list">
           <li>Write a clear title, steps to reproduce (for bugs), and acceptance criteria.</li>
           <li>Label and assign so the backlog stays navigable.</li>
           <li>Link issues to PRs so history shows what work closed what ticket.</li>
